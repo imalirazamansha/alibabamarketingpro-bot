@@ -170,7 +170,7 @@ async function callGemini(sessionId, userMessage) {
   }
 
 const model = genAI.getGenerativeModel({
-  model: 'gemini-1.5-flash-latest',
+  model: 'gemini-1.5-flash',
 });
 
 const fullHistory = [
