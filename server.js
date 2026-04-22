@@ -169,14 +169,19 @@ async function callGemini(sessionId, userMessage) {
     });
   }
 
-  const model = genAI.getGenerativeModel({
-    model: 'gemini-1.5-flash',
-    systemInstruction: SYSTEM_PROMPT
-  });
+const model = genAI.getGenerativeModel({
+  model: 'gemini-2.0-flash',
+});
 
-  const chat = model.startChat({ history });
-  const result = await chat.sendMessage(userMessage);
-  const reply = result.response.text();
+const fullHistory = [
+  { role: 'user', parts: [{ text: `SYSTEM INSTRUCTIONS:\n${SYSTEM_PROMPT}\n\nAcknowledge these instructions.` }] },
+  { role: 'model', parts: [{ text: 'Samajh gaya. Main Ali Baba Marketing Pro ka AI sales agent hoon aur in sab instructions follow karunga.' }] },
+  ...history
+];
+
+const chat = model.startChat({ history: fullHistory });
+const result = await chat.sendMessage(userMessage);
+const reply = result.response.text();
 
   // Detect order/payment status
   if (reply.toLowerCase().includes('jazak allah') && reply.toLowerCase().includes('confirm')) {
