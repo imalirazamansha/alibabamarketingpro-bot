@@ -10,7 +10,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.static('public'));
-
+// ── ENSURE DATA DIR EXISTS ────────────────────────────────────────────────────
+const dataDir = path.join(__dirname, 'data');
+if (!fs.existsSync(dataDir)) fs.mkdirSync(dataDir, { recursive: true });
+const uploadsDir = path.join(__dirname, 'public', 'uploads');
+if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
 // ── CONFIG ────────────────────────────────────────────────────────────────────
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY || 'YOUR_GEMINI_API_KEY_HERE';
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'alibaba2024';
